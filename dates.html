@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"    />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PHP date formats</title>
+
+<script>
+
+function byid(id) { return document.getElementById(id); }
+
+class PHPDateFormats {
+    constructor() {
+        const fs = ['r'];
+        const self = this;
+        fs.forEach(function(v) { self.send(v); });
+    }
+    
+    send(fin) {
+        const x = new XMLHttpRequest();
+        x.open('GET', 'server.php?' + 'format=' + fin);
+        
+        x.onloadend = function() {
+            byid('mres').innerHTML = this.responseText;
+        }
+        
+        x.send();
+    }
+    
+}
+
+window.onload = function() { new PHPDateFormats(); }
+
+</script>
+</head>
+<body>
+
+    <div id='mres'></div>
+    
+    <table>
+        <thead> <tr><th>format</th><th>result</th></tr></thead>
+        <tbody id='tbody1'></tbody>
+    </table>
+
+    
+</body>
