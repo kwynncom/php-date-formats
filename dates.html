@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PHP date formats</title>
 
+<style>
+    body { font-family: monospace}
+    td:nth-child(1) { padding-right: 2ex }
+    th:nth-child(1) { text-align   : left }
+    td { padding-bottom: 0.5ex}
+    
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+tr:nth-child(even) {
+  background-color: #E6E6E6;
+}
+    
+    
+</style>
+
 <script>
 
 function byid(id)   { return document.getElementById(id); }
@@ -12,20 +28,23 @@ function cree(type) { return document.createElement(type); }
 
 class PHPDateFormats {
     constructor() {
-        const fs = ['r', 'c'];
+        const fs = ['r', 'c', 'g:i:sa m/d',  'Y-m-d H:i:s', 'D, M d'];
         this.send(fs);
     }
     
     send(fin) {
         const x = new XMLHttpRequest();
-        x.open('GET', 'server.php?' + 'format=' + fin);
+        x.open('POST', 'server.php?');
         
         const self = this;
         x.onloadend = function() { 
             const a = JSON.parse(this.responseText);
             self.parse(a);    
         }
-        x.send();
+        
+        const formData = new FormData();
+        formData.append('formats',JSON.stringify(fin));  
+        x.send(formData);
     }
     
     parse(ain) {
@@ -52,6 +71,8 @@ window.onload = function() { new PHPDateFormats(); }
 <body>
 
     <div id='mres'></div>
+
+    <p><a href='phpdoc/doc.html'>official doc</a></p>
     
     <table>
         <thead> <tr><th>format</th><th>result</th></tr></thead>

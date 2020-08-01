@@ -5,9 +5,9 @@ require_once('/opt/kwynn/kwutils.php');
 doit();
 
 function doit() {
-    kwas(isset($_REQUEST['format']), 'no format sent');
-    $fs =      $_REQUEST['format'];
-    $a = explode(',', $fs);
+    kwas(isset($_REQUEST['formats']), 'no format sent');
+    $fs =      $_REQUEST['formats'];
+    $a = json_decode($fs, 1);
     $ra = [];
     foreach($a as $f) {    
 	kwas(!preg_match('/^[^A-Za-z- \.-]+$/', $f), 'bad character');
