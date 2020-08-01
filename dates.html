@@ -11,9 +11,12 @@ function byid(id) { return document.getElementById(id); }
 
 class PHPDateFormats {
     constructor() {
-        const fs = ['r'];
+        const fs = ['r', 'c'];
+        
+        this.send(fs);
+        
         const self = this;
-        fs.forEach(function(v) { self.send(v); });
+        // fs.forEach(function(v) { self.send(v); });
     }
     
     send(fin) {
