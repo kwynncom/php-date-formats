@@ -7,27 +7,40 @@
 
 <script>
 
-function byid(id) { return document.getElementById(id); }
+function byid(id)   { return document.getElementById(id); }
+function cree(type) { return document.createElement(type); }
 
 class PHPDateFormats {
     constructor() {
         const fs = ['r', 'c'];
-        
         this.send(fs);
-        
-        const self = this;
-        // fs.forEach(function(v) { self.send(v); });
     }
     
     send(fin) {
         const x = new XMLHttpRequest();
         x.open('GET', 'server.php?' + 'format=' + fin);
         
-        x.onloadend = function() {
-            byid('mres').innerHTML = this.responseText;
+        const self = this;
+        x.onloadend = function() { 
+            const a = JSON.parse(this.responseText);
+            self.parse(a);    
+        }
+        x.send();
+    }
+    
+    parse(ain) {
+        // console.log(ain);
+        for (const k in ain) {
+            const row = cree('tr');            
+            const ktd = cree('td');
+            const vtd = cree('td');
+            ktd.innerHTML = k;
+            vtd.innerHTML = ain[k];
+            row.append(ktd);
+            row.append(vtd);
+            byid('tbody1').append(row);
         }
         
-        x.send();
     }
     
 }
