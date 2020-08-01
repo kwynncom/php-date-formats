@@ -9,9 +9,12 @@ function doit() {
     $fs =      $_REQUEST['formats'];
     $a = json_decode($fs, 1);
     $ra = [];
+    
+    $o = new DateTimeImmutable();
+    
     foreach($a as $f) {    
 	kwas(!preg_match('/^[^A-Za-z- \.-]+$/', $f), 'bad character');
-	$ra[$f] = date($f);
+	$ra[$f] = $o->format($f);
     }
     
     header('Content-Type: application/json');
